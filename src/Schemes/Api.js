@@ -94,6 +94,8 @@ class ApiScheme extends BaseTokenScheme {
       throw GE.RuntimeException.invoke('Primary key value is missing for user')
     }
 
+    await this._serializerInstance.deleteTokens(user)
+
     const plainToken = uuid.v4().replace(/-/g, '')
     await this._serializerInstance.saveToken(user, plainToken, 'api_token')
 
