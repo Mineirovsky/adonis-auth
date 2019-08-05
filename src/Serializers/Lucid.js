@@ -214,7 +214,7 @@ class LucidSerializer {
     return this
       ._getQuery()
       .whereHas('tokens', function (builder) {
-        builder.where({ token })
+        builder.where({ session: token })
       }).first()
   }
 
@@ -233,7 +233,7 @@ class LucidSerializer {
    * @return {void}
    */
   async saveToken (user, token, type) {
-    const insertPayload = { token, maquina: 'AuthSerializer' }
+    const insertPayload = { session: token, maquina: 'AuthSerializer' }
     debug('saving token for %s user with %j payload', user.primaryKeyValue, insertPayload)
     await user.tokens().create(insertPayload)
   }
