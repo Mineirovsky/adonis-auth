@@ -214,7 +214,7 @@ class LucidSerializer {
     return this
       ._getQuery()
       .whereHas('tokens', function (builder) {
-        builder.where({ token, type, is_revoked: false })
+        builder.where({ token })
       }).first()
   }
 
@@ -233,7 +233,7 @@ class LucidSerializer {
    * @return {void}
    */
   async saveToken (user, token, type) {
-    const insertPayload = { token, type, is_revoked: false }
+    const insertPayload = { token, maquina: 'AuthSerializer' }
     debug('saving token for %s user with %j payload', user.primaryKeyValue, insertPayload)
     await user.tokens().create(insertPayload)
   }
@@ -282,7 +282,7 @@ class LucidSerializer {
    * @return {Object}
    */
   async listTokens (user, type) {
-    return user.tokens().where({ type, is_revoked: false }).fetch()
+    return user.tokens().fetch()
   }
 }
 
